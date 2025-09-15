@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do you like Amala?</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f0f4f8;
+  }
+
+  h1 {
+    color: #333;
+    font-size: 42px;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 20px;
+  }
+
+  button {
+    padding: 16px 36px;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  }
+
+  .yes {
+    background-color: #4caf50;
+    color: white;
+  }
+  .yes:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+
+  .no {
+    background-color: #f44336;
+    color: white;
+  }
+  .no:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+
+<h1>Do you like Amala?</h1>
+<div class="buttons">
+  <button class="yes">yes</button>
+  <button class="no">NO</button>
+</div>
+
+<script>
+const noBtn = document.querySelector('.no');
+let moveRight = true;
+
+// تابع جابجایی دکمه
+function moveNoButton() {
+    const moveDistance = 120;
+    const currentTransform = noBtn.style.transform.replace(/translate\(|px|\)/g, '').split(',');
+    let x = 0, y = 0;
+
+    if(currentTransform.length === 2){
+        x = parseInt(currentTransform[0]);
+        y = parseInt(currentTransform[1]);
+    }
+
+    if(moveRight){
+        x += moveDistance;
+        y += (Math.random()*40 - 20);
+    } else {
+        x -= moveDistance;
+        y += (Math.random()*40 - 20);
+    }
+
+    // محدود کردن به اندازه صفحه
+    const maxX = window.innerWidth/2 - noBtn.offsetWidth;
+    const maxY = window.innerHeight/2 - noBtn.offsetHeight;
+    x = Math.max(-maxX, Math.min(x, maxX));
+    y = Math.max(-maxY, Math.min(y, maxY));
+
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    moveRight = !moveRight;
+}
+
+// اضافه کردن رویداد برای دسکتاپ و موبایل
+noBtn.addEventListener('mouseover', moveNoButton); // دسکتاپ
+noBtn.addEventListener('touchstart', moveNoButton); // موبایل
+
+// دکمه بله
+const yesBtn = document.querySelector('.yes');
+yesBtn.addEventListener('click', () => {
+    alert("I knew you would say yes!");
+});
+</script>
+
+</body>
+</html>
